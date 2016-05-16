@@ -1,0 +1,507 @@
+<include file="App/Home/View/Public/header.html"/>
+
+<!--top end-->
+
+<!--header end-->
+
+<style>
+
+.pull-left{ float:left;}
+
+.pull-right{ float:right;}
+
+.link a{ color:#000;}
+
+.link{ margin:0px auto; width:100%;}
+
+
+
+</style>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/focus.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/Fnc.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/zc.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/1.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.flexslider-min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/hb_index.css">
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/zc.css">
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/flexslider.css">
+
+<!--banner start-->
+
+<div class="bstart"> 
+<div>
+
+	<div class="flexslider">
+
+		<ul class="slides">
+
+			<volist name='flash' id='vo'>
+
+            	<li><a href="{$vo.jump_url|default='#'}" target="_blank"><img src="{$vo.pic}" alt="{$vo.title}" style="height:320px;"></a></li>
+
+            </volist>
+
+		</ul>
+
+	</div>
+
+	<div class="ybcoin_volume">
+
+		<div style="color:#fff;">
+
+			<p style=" font-size:16px; margin-bottom:5px; text-align: center;">风险提示</p>
+
+			<p style=" font-size:12px; line-height:22px;">{$config.risk_warning}</p>
+
+		</div>
+
+					<div class="news_coin"><empty name="member"><a href="{:U('Login/index')}">立即登录</a><else/><a href="{:U('User/index')}">我的账户</a></empty></div>
+
+			<p class="coin_reg"><empty name="member"><a href="{:U('Reg/reg')}" class="left">免费注册</a><a href="{:U('Oauth/index',array('type'=>'qq'))}" class="right">QQ账号登录  </a><else/></empty></p>
+
+			</div>
+
+</div>
+
+</div>
+
+<!--banner end-->
+
+<div class="ybcoin_section clearfix" style="border:0;">
+
+    <!--币币交易开始-->
+
+    <div id="tags_coin" class="coinarea left" style="position:relative;"> 
+        <div class="bgcolor" style="display:none;"></div>
+
+        <div style="margin-top:30px;" id="tagContent">
+
+            <!-- 对CNY交易区 结束-->
+
+            <div class="tagContent selectTag" id="tagContent0">
+
+                 <p style="color:#f00; font-size:14px; margin-bottom:10px;">{$config.friendship_tips}</p>
+
+                <table class="coin_list coinarea" border="0" cellpadding="0" cellspacing="0">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>&nbsp;</th>
+
+                        <th style="text-align:left;">币  名</th>
+
+                        <th class="header">最新价格</th>
+
+                        <th class="header">24H成交量</th>
+
+                        <th class="header">24H成交额</th>
+
+                        <th class="header">总市值</th>
+
+                        <th class="header">24H涨跌</th>
+
+                        <th class="header">7D涨跌</th>
+
+                    </tr>
+
+                    </thead> 
+                    <tbody>
+                    <volist name='currency' id='vo' empty='$empty'>
+
+                        <tr class="coin_num">
+
+                            <td><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}"><img src="{$vo.currency_logo}" style="width:20px; height:20px;"></a></td>
+
+                            <td class="coin_name" align="left"><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}">{$vo.currency_name|default='虚拟币'}{$vo.currency_mark|default=''}</a></td>
+
+                            <td class="cTrade_1">
+<a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}" class="{$vo.pStatus} span1">
+<eq name='vo.trade_currency_id' value='0'>
+CNY
+<else/>
+{$vo.cMark|default='暂无'}
+</eq> 
+<eq name='vo.new_price_status' value='0'>↓<else/>↑</eq>
+</a>
+<a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}" class="{$vo.pStatus}">
+{$vo.new_price|default='暂无'}
+</a>
+</td>
+
+                            <td><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}">{$vo.24H_done_num|default='0'}</a></td>
+
+                            <td class="cTrade_2">
+ 
+<a class="span1">
+<eq name='vo.trade_currency_id' value='0'>
+CNY
+<else/>
+{$vo.cMark|default='暂无'}
+</eq>
+</a>                          
+<a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}">{$vo.24H_done_money|default='0'}</a>
+
+
+                            </a></td>
+
+                            <td class="cTrade_2">
+<a class="span1">
+<eq name='vo.trade_currency_id' value='0'>
+CNY
+<else/>
+{$vo.cMark|default='暂无'}
+</eq>
+</a>                          
+<a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}">{$vo.currency_all_money|default='0'}</a>
+ 
+                            </a></td>
+
+                            <td><gt name='vo.24H_change' value='0'><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}" class="sell"><else/><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}" class="buy"></gt>{$vo.24H_change|default='0'}%</a></td>
+
+                            <td><gt name='vo.7D_change' value='0'><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}" class="sell">+<else/><a href="{:U('Orders/index',array('currency'=>$vo['currency_mark']))}" class="buy"></gt>{$vo.7D_change|default='0'}%</a></td>
+
+                        </tr>
+
+                    </volist>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--币币交易结束-->
+
+    
+
+</div>
+
+<div style="width:1000px;margin:10px auto">
+<img src="/Uploads/ad1.png" width="1000" />
+
+</div>
+<!--公告-->
+<div class="autobox">
+<div class="coin_news">
+	<!--a1-->
+	<div class="gonggao">
+        <div class="news_title clearfix">
+
+            <h2 class="left">官方公告</h2>
+
+            <a href="{:U('Art/gonggao',array('id'=>'-1'))}" class="right">更多</a>
+
+        </div>
+
+        <ul>
+
+            <volist name="info_red1" id="vo_red1">
+
+                <li>
+
+                    <a href="{:U('Art/notice',array('id'=>$vo_red1['id']))}">
+
+                        <span class="coin_news_title left" style="color:red;font-weight:bold;">{$vo_red1.title}</span>
+
+                        <span class="right">{$vo_red1.add_time|date='m-d',###}</span>
+
+                    </a>
+
+                </li>
+
+            </volist>
+
+            <volist name="info1" id="vo1">
+
+                <li>
+
+                    <a href="{:U('Art/notice',array('id'=>$vo1['id']))}">
+
+                        <span class="coin_news_title left">{$vo1.title}</span>
+
+                        <span class="right">{$vo1.add_time|date='m-d',###}</span>
+
+                    </a>
+
+                </li>
+
+            </volist>
+
+        </ul>
+        </div>
+	<!--a2-->
+    <div class="gonggao" style="margin:0 35px;">
+        <div class="news_title clearfix">
+
+            <h2 class="left">虚拟币资讯</h2>
+
+            <a href="{:U('Art/index',array('id'=>'2'))}" class="right">更多</a>
+
+        </div>
+
+        <ul>
+
+        <volist name="info_red2" id="vo_red2">
+
+        
+
+            <li>
+
+                <a href="{:U('Art/details',array('id'=>$vo_red2['article_id']))}">
+
+                    <span class="coin_news_title left" style="color:red;font-weight:bold;">{$vo_red2.title}</span>
+
+                    <span class="right">{$vo_red2.add_time|date='m-d',###}</span>
+
+                </a>
+
+            </li>
+
+        </volist>
+
+        </ul>
+
+        <ul>
+
+            <volist name="info2" id="vo2">
+
+                <li><a href="{:U('Art/details',array('id'=>$vo2['article_id']))}"><span class="coin_news_title left">{$vo2.title}</span><span class="right">{$vo2.add_time|date='m-d',###}</span></a></li>
+
+            </volist>
+
+        </ul>
+        </div> 
+        
+        <!--a2-->
+    <div class="gonggao">
+        <div class="news_title clearfix">
+
+            <h2 class="left">币种介绍</h2>
+
+            <a href="{:U('Art/index',array('id'=>'127'))}" class="right">更多</a>
+
+        </div>
+
+        <ul>
+
+        <volist name="info_red3" id="vo_red3"> 
+            <li>
+
+                <a href="{:U('Art/details',array('id'=>$vo_red3['article_id']))}">
+
+                    <span class="coin_news_title left" style="color:red;font-weight:bold;">{$vo_red3.title}</span>
+
+                    <span class="right">{$vo_red3.add_time|date='m-d',###}</span>
+
+                </a>
+
+            </li>
+
+        </volist>
+
+        </ul>
+
+        <ul>
+
+            <volist name="info3" id="vo3">
+
+                <li><a href="{:U('Art/details',array('id'=>$vo3['article_id']))}"><span class="coin_news_title left">{$vo3.title}</span><span class="right">{$vo3.add_time|date='m-d',###}</span></a></li>
+
+            </volist>
+
+        </ul>
+        </div> 
+        <!--end a1-->
+    </div>
+</div>
+<!--End 公告-->
+<script type="text/javascript" src="__PUBLIC__/Home/js/coinindex.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/tab.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/slide.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/hb_lang.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/hb_sea.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/hb_hm.js"></script>
+<script>
+
+    seajs.use("dist/page_index");
+
+    /**/
+
+    function change_vcode(e) {
+
+        e.src = "/account/captcha?" + Math.random();
+
+    }
+
+    /**/
+
+
+
+</script>
+
+ 
+
+
+<!-- 客服信息 -->
+
+<div class="autobox">
+
+    <ul class="web_service clear pl30">
+
+        <li class=""><a id="BizQQWPA" href="http://wpa.qq.com/msgrd?v=3&uin={$config['qq1']}&site=qq&menu=yes"><div class="web_service_pic service_1"></div><div class="web_service_pic_num"><p>{$config.qq1|default="暂无"}</p><div class="qqsecvice">在线QQ客服</div></div></a></li>
+
+        <li class="w224"><div class="web_service_pic service_2"></div><div class="web_service_pic_num"><p>{$config.tel|default="暂无"}</p><div>工作日:9-19时 节假日:9-18时</div></div></li>
+
+        <li class="w155"><a href="http://weibo.com/{$config['weibo']}" target="_blank"><div class="web_service_pic service_3"></div><div class="web_service_pic_num"><p>{$config['weibo']|default="暂无"}</p><div>新浪官方微博</div></div></a></li>
+ 
+<li class="w211" onclick="window.open('{$config.qqqun_url}')">
+        <div class="web_service_pic service_4"></div><div class="web_service_pic_num"><p>QQ群:{$config['qqqun2']|default="暂无"}</p><div class="h_underl">币久网用户QQ交流群</div></div></li>
+        
+       
+<li class="w200" onclick="window.open('mailto:{$config['email']}')">
+        <div class="web_service_pic service_5"></div><div class="web_service_pic_num"><p>
+        {$config.email|default="暂无"}
+        </p><div class="h_underl">官方客服邮箱</div></div></li>
+
+    </ul>
+
+</div>
+
+
+
+
+
+
+
+<div class="safety_tips">
+
+    <div style="border-top:#d8d8d8 dotted 1px;width: 1000px; margin: 0 auto; margin-bottom: 20px;"></div>
+
+    
+    
+    <div class="slogan_tis">
+     
+     专业的安全保障 &nbsp;&nbsp;&nbsp;&nbsp;  
+     
+    本站累计交易额已达:&nbsp;&nbsp;  <span id="yi"><span>{$sum_money|default='0'} CNY</span>
+    </span>
+    </div>
+    
+    
+
+    <div class="autobox">
+
+        <ul class="safety_tips_ul clear">
+
+            <li>
+
+                <img src="/Public/Home/images/safe_1.jpg" alt="" height="70" width="70">
+
+                <h4>系统可靠</h4>
+
+                <p>银行级用户数据加密、动态身份验证，多级风险识别控制，保障交易安全</p>
+
+            </li>
+
+            <li>
+
+                <img src="/Public/Home/images/safe_2.jpg" alt="" height="70" width="70">
+
+                <h4>资金安全</h4>
+
+                <p>钱包多层加密，离线存储于银行保险柜，资金第三方托管，确保安全</p>
+
+            </li>
+
+            <li>
+
+                <img src="/Public/Home/images/safe_3.jpg" alt="" height="70" width="70">
+
+                <h4>快捷方便</h4>
+
+                <p>充值即时、提现迅速，每秒万单的高性能交易引擎，保证一切快捷方便</p>
+
+            </li>
+
+            <li>
+
+                <img src="/Public/Home/images/safe_4.jpg" alt="" height="70" width="70">
+
+                <h4>服务专业</h4>
+
+                <p>专业的客服团队，400电话和24小时在线QQ，VIP一对一专业服务</p>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<!--友情链接-->
+
+<div class="link">
+
+    <div class="linkbox">
+
+        <h4>友情链接</h4>
+
+        <ul>
+
+            <volist name = "link_info" id = "vo">
+
+                <li><a target="_blank" href="http://{$vo['url']}" style=" font-size:16px;">{$vo.name}</a> </li>
+
+            </volist>
+
+
+
+        </ul>
+
+    </div>
+
+</div>
+
+
+
+<!--footer start-->
+
+<include file="App/Home/View/Public/footer.html"/>
+
+<!--footer end-->
+
+<script>
+
+$(function() { 
+
+    $(".flexslider").flexslider({
+
+		directionNav: true,
+
+		pauseOnAction: false
+
+});
+
+});
+
+
+
+</script>
+
